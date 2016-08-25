@@ -3,6 +3,8 @@ package ru.sulion.webapplications;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import ru.sulion.webapplications.health.MilesShortHealthcheck;
+import ru.sulion.webapplications.resources.ConfigurationResource;
 
 public class MilesShortApplication extends Application<MilesShortConfiguration> {
 
@@ -23,7 +25,10 @@ public class MilesShortApplication extends Application<MilesShortConfiguration> 
     @Override
     public void run(final MilesShortConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+        final ConfigurationResource configurationResource = new ConfigurationResource();
+        final MilesShortHealthcheck healthcheck = new MilesShortHealthcheck();
+        environment.healthChecks().register("health", healthcheck);
+        environment.jersey().register(configurationResource);
     }
 
 }
