@@ -39,4 +39,10 @@ public class ConfigurationResource {
             put("https://yandex.ru/DGS", 45);
         }};
     }
+
+    @GET
+    @Path("{shortUrl: (?!register|account|statistic).*}")
+    public SignUpRequest redirectViaShortURL(@PathParam("shortUrl") String shortUrl) {
+        return new SignUpRequest(shortUrl);
+    }
 }

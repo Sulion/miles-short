@@ -8,6 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class SignUpRequest {
     private String AccountId;
 
+    public SignUpRequest() {
+    }
+
     public SignUpRequest(String accountId) {
         AccountId = accountId;
     }

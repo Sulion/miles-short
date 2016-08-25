@@ -9,6 +9,9 @@ public class RegisterURLRequest {
     private String url;
     private int redirectType;
 
+    public RegisterURLRequest() {
+    }
+
     public RegisterURLRequest(String url, int redirectType) {
         this.url = url;
         this.redirectType = redirectType;
