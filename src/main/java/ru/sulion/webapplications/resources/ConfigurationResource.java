@@ -13,26 +13,26 @@ import java.util.Map;
 /**
  * Created by sulion on 25.08.16.
  */
-
+@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class ConfigurationResource {
 
     @PUT
-    @Path("/account")
+    @Path("account")
     @Consumes(MediaType.APPLICATION_JSON)
     public SignUpResponse signUp(SignUpRequest request){
         return new SignUpResponse(true, "It's not real yet", "password");
     }
 
     @PUT
-    @Path("/register")
+    @Path("register")
     @Consumes(MediaType.APPLICATION_JSON)
     public RegisteredURLResponse register(RegisterURLRequest request) {
         return new RegisteredURLResponse("https://google.com");
     }
 
     @GET
-    @Path("/statistic/{accountId}")
+    @Path("statistic/{accountId}")
     public Map<String, Integer> retrieveStatistics(@PathParam("accountId") String accountId) {
         return new HashMap<String, Integer>(){{
             put("https://google.com/ABC", 93);
