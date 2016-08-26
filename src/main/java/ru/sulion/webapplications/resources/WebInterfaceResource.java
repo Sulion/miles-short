@@ -15,7 +15,7 @@ import java.util.Map;
  */
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
-public class ConfigurationResource {
+public class WebInterfaceResource {
 
     @PUT
     @Path("account")
