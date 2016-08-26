@@ -1,6 +1,7 @@
 package ru.sulion.webapplications;
 
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.setup.Bootstrap;
@@ -24,7 +25,8 @@ public class MilesShortApplication extends Application<MilesShortConfiguration> 
 
     @Override
     public void initialize(final Bootstrap<MilesShortConfiguration> bootstrap) {
-        // TODO: application initialization
+        bootstrap.addBundle(new AssetsBundle("/assets", "/help", "help.html"));
+
     }
 
     @Override
