@@ -1,8 +1,13 @@
 package ru.sulion.webapplications;
 
 import io.dropwizard.Application;
+import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import ru.sulion.webapplications.auth.MilesShortConfigAuthorizer;
+import ru.sulion.webapplications.auth.MilesShortConfigurationAutheticator;
+import ru.sulion.webapplications.core.User;
 import ru.sulion.webapplications.health.MilesShortHealthcheck;
 import ru.sulion.webapplications.resources.WebInterfaceResource;
 
@@ -25,6 +30,12 @@ public class MilesShortApplication extends Application<MilesShortConfiguration> 
     @Override
     public void run(final MilesShortConfiguration configuration,
                     final Environment environment) {
+        environment.jersey().register(new AuthDynamicFeature(
+                new BasicCredentialAuthFilter.Builder<User>()
+                        .setAuthenticator(new MilesShortConfigurationAutheticator())
+                        .setAuthorizer(new MilesShortConfigAuthorizer())
+                        .setRealm("URL MANAGEMENT")
+                        .buildAuthFilter()));
         final WebInterfaceResource webInterfaceResource = new WebInterfaceResource();
         final MilesShortHealthcheck healthcheck = new MilesShortHealthcheck();
         environment.healthChecks().register("health", healthcheck);

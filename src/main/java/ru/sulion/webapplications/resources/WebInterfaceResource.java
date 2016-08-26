@@ -1,5 +1,6 @@
 package ru.sulion.webapplications.resources;
 
+import com.codahale.metrics.annotation.Timed;
 import ru.sulion.webapplications.api.RegisterURLRequest;
 import ru.sulion.webapplications.api.RegisteredURLResponse;
 import ru.sulion.webapplications.api.SignUpRequest;
@@ -40,6 +41,7 @@ public class WebInterfaceResource {
         }};
     }
 
+    @Timed
     @GET
     @Path("{shortUrl: (?!register|account|statistic).*}")
     public SignUpRequest redirectViaShortURL(@PathParam("shortUrl") String shortUrl) {
