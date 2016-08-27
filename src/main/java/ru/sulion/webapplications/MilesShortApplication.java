@@ -10,8 +10,8 @@ import ru.sulion.webapplications.auth.MilesShortConfigAuthorizer;
 import ru.sulion.webapplications.auth.MilesShortConfigurationAutheticator;
 import ru.sulion.webapplications.core.User;
 import ru.sulion.webapplications.health.MilesShortHealthcheck;
-import ru.sulion.webapplications.resources.RedirectingResource;
 import ru.sulion.webapplications.resources.ConfigurationResource;
+import ru.sulion.webapplications.resources.RedirectingResource;
 
 public class MilesShortApplication extends Application<MilesShortConfiguration> {
 

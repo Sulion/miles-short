@@ -1,6 +1,5 @@
 package ru.sulion.webapplications.core;
 
-import javax.security.auth.Subject;
 import java.security.Principal;
 import java.util.Set;
 
