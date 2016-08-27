@@ -1,4 +1,4 @@
-package ru.sulion.webapplications.core.db;
+package ru.sulion.webapplications.db;
 
 import ru.sulion.webapplications.api.Redirect;
 import ru.sulion.webapplications.db.RedirectDictionary;

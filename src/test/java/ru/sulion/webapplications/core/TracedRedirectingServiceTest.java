@@ -1,9 +1,11 @@
 package ru.sulion.webapplications.core;
 
+import org.junit.After;
+import org.junit.Test;
 import ru.sulion.webapplications.api.Redirect;
 import ru.sulion.webapplications.core.core.MockTaskManager;
-import ru.sulion.webapplications.core.db.MockStatisticStore;
-import ru.sulion.webapplications.core.db.MockURLDictionary;
+import ru.sulion.webapplications.db.MockStatisticStore;
+import ru.sulion.webapplications.db.MockURLDictionary;
 import ru.sulion.webapplications.db.RedirectDictionary;
 import ru.sulion.webapplications.db.StatisticsStore;
 
@@ -30,16 +32,24 @@ public class TracedRedirectingServiceTest {
         service = new TracedRedirectingService(dictionary, statisticsStore, taskManager);
     }
 
-    @org.junit.After
+    @After
     public void tearDown() throws Exception {
 
     }
 
-    @org.junit.Test
+    @Test
     public void resolveURI() throws Exception {
         Redirect redirect = service.resolveURI("xYswIE");
         assertEquals(URI.create("https://github.com/Sulion/miles-short"), redirect.getLocation());
         assertEquals(Response.Status.FOUND, redirect.getStatus());
     }
+
+    @Test
+    public void resolveAbsentURI() {
+        Redirect redirect = service.resolveURI("NoSuchURL");
+        assertEquals(Response.Status.NOT_FOUND, redirect.getStatus());
+    }
+
+
 
 }

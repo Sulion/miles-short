@@ -1,12 +1,13 @@
 package ru.sulion.webapplications.api;
 
 import javax.ws.rs.core.Response;
+import java.io.Serializable;
 import java.net.URI;
 
 /**
  * Created by sulion on 27.08.16.
  */
-public class Redirect {
+public class Redirect implements Serializable{
     private final Response.Status status;
     private final URI location;
 
@@ -22,4 +23,6 @@ public class Redirect {
     public URI getLocation() {
         return location;
     }
+
+
 }
