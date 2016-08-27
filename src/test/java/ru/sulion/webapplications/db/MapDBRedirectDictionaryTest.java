@@ -33,7 +33,7 @@ public class MapDBRedirectDictionaryTest {
         Map<String, Redirect> map = (Map<String, Redirect>) db.treeMap(RedirectDictionary.DICT_NAME)
                 .keySerializer(Serializer.STRING)
                 .createOrOpen();
-        map.put(TEST_SHORT_URL, new Redirect(Response.Status.FOUND, TEST_URL));
+        map.put(TEST_SHORT_URL, new Redirect(Response.Status.FOUND, TEST_URL, TEST_SHORT_URL));
         db.close();
     }
 

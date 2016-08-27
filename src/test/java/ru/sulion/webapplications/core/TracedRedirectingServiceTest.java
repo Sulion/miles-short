@@ -20,12 +20,14 @@ import static org.junit.Assert.assertEquals;
  */
 public class TracedRedirectingServiceTest {
 
+    public static final String SHORT_URL = "xYswIE";
     private TracedRedirectingService service;
 
     @org.junit.Before
     public void setUp() throws Exception {
         RedirectDictionary dictionary = new MockURLDictionary(new HashMap<String, Redirect>() {{
-            put("xYswIE", new Redirect(Response.Status.FOUND, "https://github.com/Sulion/miles-short"));
+            put(SHORT_URL, new Redirect(Response.Status.FOUND,
+                    "https://github.com/Sulion/miles-short", SHORT_URL));
         }});
         StatisticsStore statisticsStore = new MockStatisticStore();
         OverheadTaskManager taskManager = new MockTaskManager();

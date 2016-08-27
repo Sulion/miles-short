@@ -1,5 +1,6 @@
 package ru.sulion.webapplications.core.core;
 
+import ru.sulion.webapplications.api.Redirect;
 import ru.sulion.webapplications.core.OverheadTaskManager;
 
 import java.util.function.Consumer;
@@ -9,8 +10,9 @@ import java.util.function.Consumer;
  */
 public class MockTaskManager implements OverheadTaskManager{
 
+
     @Override
-    public void execute(String shortUrl, Consumer<String> consumer) {
-        consumer.accept(shortUrl);
+    public void execute(Redirect param, Consumer<Redirect> consumer) {
+        consumer.accept(param);
     }
 }

@@ -26,7 +26,8 @@ public class TracedRedirectingService implements RedirectingService {
 
     @Override
     public Redirect resolveURI(String shortUrl) {
-        taskManager.execute(shortUrl, statisticsStore::registerRequest);
-        return dictionary.find(shortUrl);
+        Redirect redirect = dictionary.find(shortUrl);
+        taskManager.execute(redirect, statisticsStore::registerRequest);
+        return redirect;
     }
 }

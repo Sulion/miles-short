@@ -11,12 +11,10 @@ import java.util.Map;
  * Created by sulion on 27.08.16.
  */
 public class MapDBRedirectDictionary implements RedirectDictionary {
-    private final DB db;
     Map<String, Redirect> storage;
 
     @Inject
     public MapDBRedirectDictionary(@ReadOnly DB db) {
-        this.db = db;
         storage = (Map<String, Redirect>) db.treeMap(DICT_NAME).keySerializer(Serializer.STRING).open();
     }
 

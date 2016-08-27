@@ -1,8 +1,8 @@
 package ru.sulion.webapplications.db;
 
-/**
- * Created by sulion on 27.08.16.
- */
+import ru.sulion.webapplications.api.Redirect;
+
 public interface StatisticsStore {
-    boolean registerRequest(String shortUrl);
+    String STATISTICS_DICT = "STATS";
+    boolean registerRequest(Redirect shortUrl);
 }
