@@ -5,9 +5,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
+import ru.sulion.webapplications.api.Redirect;
+import ru.sulion.webapplications.core.KeyComposer;
 
+import javax.ws.rs.core.Response;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -20,12 +25,15 @@ public class MapDBStatisticsStoreTest {
     private MapDBStatisticsStore statisticsStore;
     private DB db;
     public static final String TEST_SHORT_URL = "xYswIE";
+    public static final String TEST_URL = "https://github.com/Sulion/miles-short";
+
 
 
     @Before
     public void setUp() throws Exception {
-        db = DBMaker.fileDB(TEST_DB).closeOnJvmShutdown().fileMmapEnable().make();
-        statisticsStore = new MapDBStatisticsStore(db);
+        db = DBMaker.fileDB(TEST_DB).closeOnJvmShutdown().fileMmapEnable().cleanerHackEnable()
+                .transactionEnable().make();
+        statisticsStore = new MapDBStatisticsStore(db, new KeyComposer());
     }
 
     @After
@@ -35,7 +43,12 @@ public class MapDBStatisticsStoreTest {
 
     @Test
     public void registerRequest() throws Exception {
-//        statisticsStore.registerRequest()
+        Redirect redirect = new Redirect(Response.Status.FOUND, TEST_URL, TEST_SHORT_URL);
+        statisticsStore.registerRequest(redirect);
+        List<String> request = Collections.singletonList(redirect.getShortUrl() +
+                redirect.getLocation().toString());
+        assertEquals(Long.valueOf(1), statisticsStore.requestStatistics(request)
+                .get(redirect.getLocation().toString()));
     }
 
 }

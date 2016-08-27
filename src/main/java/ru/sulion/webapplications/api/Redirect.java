@@ -23,5 +23,7 @@ public class Redirect implements Serializable{
         return location;
     }
 
-
+    public String getShortUrl() {
+        return shortUrl;
+    }
 }
