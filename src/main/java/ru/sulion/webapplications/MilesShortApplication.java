@@ -1,5 +1,7 @@
 package ru.sulion.webapplications;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -33,14 +35,15 @@ public class MilesShortApplication extends Application<MilesShortConfiguration> 
     @Override
     public void run(final MilesShortConfiguration configuration,
                     final Environment environment) {
+        Injector injector = Guice.createInjector(new MilesShortModule());
         environment.jersey().register(new AuthDynamicFeature(
                 new BasicCredentialAuthFilter.Builder<User>()
                         .setAuthenticator(new MilesShortConfigurationAutheticator())
                         .setAuthorizer(new MilesShortConfigAuthorizer())
                         .setRealm("URL MANAGEMENT")
                         .buildAuthFilter()));
-        final ConfigurationResource configurationResource = new ConfigurationResource();
-        final RedirectingResource redirectingResource = new RedirectingResource();
+        final ConfigurationResource configurationResource = injector.getInstance(ConfigurationResource.class);
+        final RedirectingResource redirectingResource = injector.getInstance(RedirectingResource.class);
         final MilesShortHealthcheck healthcheck = new MilesShortHealthcheck();
         environment.healthChecks().register("health", healthcheck);
         environment.jersey().register(configurationResource);
