@@ -1,6 +1,5 @@
 package ru.sulion.webapplications.resources;
 
-import com.codahale.metrics.annotation.Timed;
 import ru.sulion.webapplications.api.RegisterURLRequest;
 import ru.sulion.webapplications.api.RegisteredURLResponse;
 import ru.sulion.webapplications.api.SignUpRequest;
@@ -10,9 +9,7 @@ import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +18,7 @@ import java.util.Map;
  */
 
 @Path("/")
-public class WebInterfaceResource {
+public class ConfigurationResource {
 
     @PUT
     @Path("account")
@@ -53,12 +50,5 @@ public class WebInterfaceResource {
             }};
         }
         throw new ForbiddenException("You may see only your own statistics");
-    }
-
-    @Timed
-    @GET
-    @Path("{shortUrl: (?!register|account|statistic).{6}}")
-    public Response redirectViaShortURL(@PathParam("shortUrl") String shortUrl) {
-        return Response.temporaryRedirect(URI.create("https://google.com")).build();
     }
 }

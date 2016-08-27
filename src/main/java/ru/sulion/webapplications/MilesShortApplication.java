@@ -10,7 +10,8 @@ import ru.sulion.webapplications.auth.MilesShortConfigAuthorizer;
 import ru.sulion.webapplications.auth.MilesShortConfigurationAutheticator;
 import ru.sulion.webapplications.core.User;
 import ru.sulion.webapplications.health.MilesShortHealthcheck;
-import ru.sulion.webapplications.resources.WebInterfaceResource;
+import ru.sulion.webapplications.resources.RedirectingResource;
+import ru.sulion.webapplications.resources.ConfigurationResource;
 
 public class MilesShortApplication extends Application<MilesShortConfiguration> {
 
@@ -38,10 +39,12 @@ public class MilesShortApplication extends Application<MilesShortConfiguration> 
                         .setAuthorizer(new MilesShortConfigAuthorizer())
                         .setRealm("URL MANAGEMENT")
                         .buildAuthFilter()));
-        final WebInterfaceResource webInterfaceResource = new WebInterfaceResource();
+        final ConfigurationResource configurationResource = new ConfigurationResource();
+        final RedirectingResource redirectingResource = new RedirectingResource();
         final MilesShortHealthcheck healthcheck = new MilesShortHealthcheck();
         environment.healthChecks().register("health", healthcheck);
-        environment.jersey().register(webInterfaceResource);
+        environment.jersey().register(configurationResource);
+        environment.jersey().register(redirectingResource);
     }
 
 }
