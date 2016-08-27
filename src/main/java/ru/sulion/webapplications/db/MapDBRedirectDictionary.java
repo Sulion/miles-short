@@ -1,9 +1,9 @@
 package ru.sulion.webapplications.db;
 
 import com.google.inject.Inject;
+import org.mapdb.DB;
 import org.mapdb.Serializer;
 import ru.sulion.webapplications.api.Redirect;
-import org.mapdb.DB;
 
 import java.util.Map;
 

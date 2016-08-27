@@ -11,11 +11,11 @@ import ru.sulion.webapplications.api.Redirect;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by sulion on 27.08.16.

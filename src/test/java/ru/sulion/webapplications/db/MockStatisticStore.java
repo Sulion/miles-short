@@ -1,7 +1,6 @@
 package ru.sulion.webapplications.db;
 
 import ru.sulion.webapplications.api.Redirect;
-import ru.sulion.webapplications.db.StatisticsStore;
 
 import java.util.HashMap;
 import java.util.List;
