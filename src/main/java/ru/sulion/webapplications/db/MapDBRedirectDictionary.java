@@ -5,6 +5,7 @@ import org.mapdb.DB;
 import org.mapdb.Serializer;
 import ru.sulion.webapplications.api.Redirect;
 
+import javax.ws.rs.core.Response;
 import java.util.Map;
 
 /**
@@ -12,6 +13,8 @@ import java.util.Map;
  */
 public class MapDBRedirectDictionary implements RedirectDictionary {
     Map<String, Redirect> storage;
+    public static final Redirect DEFAULT_VALUE = new Redirect(Response.Status.NOT_FOUND, null, null);
+
 
     @Inject
     public MapDBRedirectDictionary(@ReadOnly DB db) {
@@ -20,6 +23,6 @@ public class MapDBRedirectDictionary implements RedirectDictionary {
 
     @Override
     public Redirect find(String shortUrl) {
-        return storage.get(shortUrl);
+        return storage.getOrDefault(shortUrl, DEFAULT_VALUE);
     }
 }

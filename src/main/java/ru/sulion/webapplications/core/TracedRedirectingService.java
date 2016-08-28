@@ -6,6 +6,8 @@ import ru.sulion.webapplications.api.RedirectingService;
 import ru.sulion.webapplications.db.RedirectDictionary;
 import ru.sulion.webapplications.db.StatisticsStore;
 
+import javax.ws.rs.core.Response;
+
 /**
  * Created by sulion on 27.08.16.
  */
@@ -27,7 +29,9 @@ public class TracedRedirectingService implements RedirectingService {
     @Override
     public Redirect resolveURI(String shortUrl) {
         Redirect redirect = dictionary.find(shortUrl);
-        taskManager.execute(redirect, statisticsStore::registerRequest);
+        if(redirect.getStatus() != Response.Status.NOT_FOUND)
+            taskManager.execute(redirect, statisticsStore::registerRequest);
+        //In other case this is not a valid click
         return redirect;
     }
 }

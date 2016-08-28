@@ -3,6 +3,7 @@ package ru.sulion.webapplications.api;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
 import java.net.URI;
+import java.util.Optional;
 
 public class Redirect implements Serializable{
     private final Response.Status status;
@@ -11,7 +12,7 @@ public class Redirect implements Serializable{
 
     public Redirect(Response.Status status, String location, String shortUrl) {
         this.status = status;
-        this.location = URI.create(location);
+        this.location = Optional.ofNullable(location).map(URI::create).orElse(null);
         this.shortUrl = shortUrl;
     }
 

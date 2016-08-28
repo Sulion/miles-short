@@ -2,6 +2,7 @@ package ru.sulion.webapplications.db;
 
 import ru.sulion.webapplications.api.Redirect;
 
+import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import java.util.Map;
  */
 public class MockURLDictionary implements RedirectDictionary {
 
+    public static final Redirect DEFAULT_VALUE = new Redirect(Response.Status.NOT_FOUND, null, null);
     private final Map<String, Redirect> map = new HashMap<>();
 
     public MockURLDictionary(Map<String, Redirect> initMap) {
@@ -18,6 +20,6 @@ public class MockURLDictionary implements RedirectDictionary {
 
     @Override
     public Redirect find(String shortUrl) {
-        return map.get(shortUrl);
+        return map.getOrDefault(shortUrl, DEFAULT_VALUE);
     }
 }
