@@ -33,7 +33,7 @@ public class MapDBStatisticsStoreTest {
     public void setUp() throws Exception {
         db = DBMaker.fileDB(TEST_DB).closeOnJvmShutdown().fileMmapEnable().cleanerHackEnable()
                 .transactionEnable().make();
-        statisticsStore = new MapDBStatisticsStore(db, new KeyComposer());
+        statisticsStore = new MapDBStatisticsStore(db, new KeyComposer(db));
     }
 
     @After

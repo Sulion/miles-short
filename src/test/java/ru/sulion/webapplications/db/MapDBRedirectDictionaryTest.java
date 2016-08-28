@@ -29,7 +29,7 @@ public class MapDBRedirectDictionaryTest {
 
     @Before
     public void setUp() throws Exception {
-        db = DBMaker.fileDB(TEST_DB).closeOnJvmShutdown().fileMmapEnable().make();
+        db = DBMaker.fileDB(TEST_DB).closeOnJvmShutdown().fileMmapEnable().cleanerHackEnable().make();
         Map<String, Redirect> map = (Map<String, Redirect>) db.treeMap(RedirectDictionary.DICT_NAME)
                 .keySerializer(Serializer.STRING)
                 .createOrOpen();
