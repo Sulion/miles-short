@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
+import org.mapdb.Serializer;
 import ru.sulion.webapplications.api.Redirect;
 import ru.sulion.webapplications.core.KeyComposer;
 
@@ -13,6 +14,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.LongAdder;
 
 import static org.junit.Assert.assertEquals;
 
@@ -38,6 +42,7 @@ public class MapDBStatisticsStoreTest {
 
     @After
     public void tearDown() throws Exception {
+        db.close();
         Files.deleteIfExists(Paths.get(TEST_DB));
     }
 
@@ -45,8 +50,7 @@ public class MapDBStatisticsStoreTest {
     public void registerRequest() throws Exception {
         Redirect redirect = new Redirect(Response.Status.FOUND, TEST_URL, TEST_SHORT_URL);
         statisticsStore.registerRequest(redirect);
-        List<String> request = Collections.singletonList(redirect.getShortUrl() +
-                redirect.getLocation().toString());
+        List<Redirect> request = Collections.singletonList(redirect);
         assertEquals(Long.valueOf(1), statisticsStore.requestStatistics(request)
                 .get(redirect.getLocation().toString()));
     }
