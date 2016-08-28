@@ -1,10 +1,11 @@
 package ru.sulion.webapplications.db;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import org.mapdb.DB;
 import org.mapdb.Serializer;
 import ru.sulion.webapplications.api.*;
-import ru.sulion.webapplications.core.AccountService;
+import ru.sulion.webapplications.api.AccountService;
 import ru.sulion.webapplications.core.KeyComposer;
 
 import javax.ws.rs.core.Response;
@@ -29,7 +30,8 @@ public class MapDBAccountService implements AccountService {
     private final SecureRandom random = new SecureRandom();
 
     @Inject
-    public MapDBAccountService(DB db, KeyComposer keyComposer, String domainAddressPart) throws MalformedURLException {
+    public MapDBAccountService(DB db, KeyComposer keyComposer, @Named("HTTP_URL") String domainAddressPart)
+            throws MalformedURLException {
         this.db = db;
         this.keyComposer = keyComposer;
         this.domainURL = domainAddressPart == null? null : new URL(domainAddressPart);
@@ -42,14 +44,19 @@ public class MapDBAccountService implements AccountService {
 
     @Override
     public List<Redirect> getRecordsFor(String accountId) {
-        Map<String, Redirect> map = openRecordsMap(accountId);
+        Map<String, Redirect> map = openAccountRecordsMap(accountId);
         if(map.size() == 0)
             return Collections.emptyList();
         return new ArrayList<>(map.values());
     }
 
-    private Map<String, Redirect> openRecordsMap(String name) {
+    private Map<String, Redirect> openAccountRecordsMap(String name) {
         return db.treeMap(RECORDS_DB_PREFIX + name)
+                .keySerializer(Serializer.STRING).valueSerializer(Serializer.JAVA).createOrOpen();
+    }
+
+    private Map<String, Redirect> openGlobalRecordsMap() {
+        return db.treeMap(RedirectDictionary.DICT_NAME)
                 .keySerializer(Serializer.STRING).valueSerializer(Serializer.JAVA).createOrOpen();
     }
 
@@ -60,10 +67,12 @@ public class MapDBAccountService implements AccountService {
 
     @Override
     public RegisteredURLResponse registerRecordFor(String accountId, RegisterURLRequest request) {
-        Map<String, Redirect> map = openRecordsMap(accountId);
+        Map<String, Redirect> map = openAccountRecordsMap(accountId);
         String key = keyComposer.toShortURL(request.getUrl());
-        map.put(key, new Redirect(Optional.ofNullable(request.getRedirectType()).orElse(Response.Status.FOUND),
-                request.getUrl(), key));
+        Redirect redirect = new Redirect(Optional.ofNullable(request.getRedirectType()).orElse(Response.Status.FOUND),
+                request.getUrl(), key);
+        map.put(key, redirect);
+        openGlobalRecordsMap().put(key, redirect);
         db.commit();
         try {
             return new RegisteredURLResponse((new URL(domainURL, key)).toString());

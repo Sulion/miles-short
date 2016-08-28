@@ -35,7 +35,7 @@ public class MilesShortApplication extends Application<MilesShortConfiguration> 
     @Override
     public void run(final MilesShortConfiguration configuration,
                     final Environment environment) {
-        Injector injector = Guice.createInjector(new MilesShortModule());
+        Injector injector = Guice.createInjector(new MilesShortModule(configuration));
         environment.jersey().register(new AuthDynamicFeature(
                 new BasicCredentialAuthFilter.Builder<User>()
                         .setAuthenticator(injector.getInstance(MilesShortConfigurationAutheticator.class))

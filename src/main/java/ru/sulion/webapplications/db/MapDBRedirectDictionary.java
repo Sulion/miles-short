@@ -17,8 +17,9 @@ public class MapDBRedirectDictionary implements RedirectDictionary {
 
 
     @Inject
-    public MapDBRedirectDictionary(@ReadOnly DB db) {
-        storage = (Map<String, Redirect>) db.treeMap(DICT_NAME).keySerializer(Serializer.STRING).open();
+    public MapDBRedirectDictionary(DB db) {
+        storage = (Map<String, Redirect>) db.treeMap(DICT_NAME).keySerializer(Serializer.STRING)
+                .valueSerializer(Serializer.JAVA).open();
     }
 
     @Override

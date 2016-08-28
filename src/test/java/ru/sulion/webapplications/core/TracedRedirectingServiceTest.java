@@ -6,7 +6,7 @@ import ru.sulion.webapplications.api.Redirect;
 import ru.sulion.webapplications.db.MockStatisticStore;
 import ru.sulion.webapplications.db.MockURLDictionary;
 import ru.sulion.webapplications.db.RedirectDictionary;
-import ru.sulion.webapplications.db.StatisticsStore;
+import ru.sulion.webapplications.api.StatisticsStore;
 
 import javax.ws.rs.core.Response;
 import java.net.URI;

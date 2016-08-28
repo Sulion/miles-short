@@ -1,6 +1,7 @@
 package ru.sulion.webapplications.db;
 
 import ru.sulion.webapplications.api.Redirect;
+import ru.sulion.webapplications.api.StatisticsStore;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Created by sulion on 27.08.16.
  */
-public class MockStatisticStore implements StatisticsStore{
+public class MockStatisticStore implements StatisticsStore {
 
     private final Map<String, AtomicLong> longMap;
 

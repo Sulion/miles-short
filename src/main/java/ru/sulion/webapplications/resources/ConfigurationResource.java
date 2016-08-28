@@ -5,8 +5,8 @@ import ru.sulion.webapplications.api.RegisterURLRequest;
 import ru.sulion.webapplications.api.RegisteredURLResponse;
 import ru.sulion.webapplications.api.SignUpRequest;
 import ru.sulion.webapplications.api.SignUpResponse;
-import ru.sulion.webapplications.core.AccountService;
-import ru.sulion.webapplications.db.StatisticsStore;
+import ru.sulion.webapplications.api.AccountService;
+import ru.sulion.webapplications.api.StatisticsStore;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
