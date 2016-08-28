@@ -1,5 +1,6 @@
 package ru.sulion.webapplications.db;
 
+import com.google.inject.Inject;
 import org.mapdb.DB;
 import org.mapdb.Serializer;
 import ru.sulion.webapplications.api.Redirect;
@@ -33,6 +34,7 @@ public class MapDBStatisticsStore implements StatisticsStore {
      * so we need a long to store the value.
      */
 
+    @Inject
     public MapDBStatisticsStore(DB db, KeyComposer keyComposer) {
         this.db = db;
         this.keyComposer = keyComposer;
