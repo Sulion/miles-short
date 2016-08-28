@@ -3,7 +3,6 @@ package ru.sulion.webapplications.core;
 import org.junit.After;
 import org.junit.Test;
 import ru.sulion.webapplications.api.Redirect;
-import ru.sulion.webapplications.core.core.MockTaskManager;
 import ru.sulion.webapplications.db.MockStatisticStore;
 import ru.sulion.webapplications.db.MockURLDictionary;
 import ru.sulion.webapplications.db.RedirectDictionary;

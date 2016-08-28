@@ -1,7 +1,6 @@
-package ru.sulion.webapplications.core.core;
+package ru.sulion.webapplications.core;
 
 import ru.sulion.webapplications.api.Redirect;
-import ru.sulion.webapplications.core.OverheadTaskManager;
 
 import java.util.function.Consumer;
 
