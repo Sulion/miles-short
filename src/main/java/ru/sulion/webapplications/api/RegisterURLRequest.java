@@ -8,6 +8,8 @@ import javax.ws.rs.core.Response;
  * Created by sulion on 25.08.16.
  */
 public class RegisterURLRequest {
+    //TODO: url is mandatory
+    //TODO: keep redirectType as int
     private String url;
     private Response.Status redirectType;
 

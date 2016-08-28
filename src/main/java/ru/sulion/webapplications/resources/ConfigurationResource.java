@@ -28,15 +28,16 @@ public class ConfigurationResource {
         this.accountService = accountService;
     }
 
-    @PUT
+    @POST
     @Path("account")
     @Consumes(MediaType.APPLICATION_JSON)
     public SignUpResponse signUp(SignUpRequest request){
+        //TODO: Add reject code when the account already exists
         return accountService.register(request);
     }
 
     @PermitAll
-    @PUT
+    @POST
     @Path("register")
     @Consumes(MediaType.APPLICATION_JSON)
     public RegisteredURLResponse register(RegisterURLRequest request,
@@ -47,10 +48,10 @@ public class ConfigurationResource {
     @PermitAll
     @GET
     @Path("statistic/{accountId}")
-    public Map<String, Integer> retrieveStatistics(@PathParam("accountId") String accountId,
+    public Map<String, Long> retrieveStatistics(@PathParam("accountId") String accountId,
                                                    @Context SecurityContext securityContext) {
         if(securityContext.getUserPrincipal().getName().equals(accountId)) {
-            statisticsStore.requestStatistics(accountService.getRecordsFor(accountId));
+            return statisticsStore.requestStatistics(accountService.getRecordsFor(accountId));
         }
         throw new ForbiddenException("You may see only your own statistics");
     }
