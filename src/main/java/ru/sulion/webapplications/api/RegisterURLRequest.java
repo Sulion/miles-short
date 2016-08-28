@@ -2,17 +2,19 @@ package ru.sulion.webapplications.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.ws.rs.core.Response;
+
 /**
  * Created by sulion on 25.08.16.
  */
 public class RegisterURLRequest {
     private String url;
-    private int redirectType;
+    private Response.Status redirectType;
 
     public RegisterURLRequest() {
     }
 
-    public RegisterURLRequest(String url, int redirectType) {
+    public RegisterURLRequest(String url, Response.Status redirectType) {
         this.url = url;
         this.redirectType = redirectType;
     }
@@ -27,11 +29,11 @@ public class RegisterURLRequest {
     }
 
     @JsonProperty
-    public int getRedirectType() {
+    public Response.Status getRedirectType() {
         return redirectType;
     }
 
-    public void setRedirectType(int redirectType) {
+    public void setRedirectType(Response.Status redirectType) {
         this.redirectType = redirectType;
     }
 }
