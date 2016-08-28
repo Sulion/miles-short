@@ -1,9 +1,6 @@
 package ru.sulion.webapplications.core;
 
-import ru.sulion.webapplications.api.Redirect;
-import ru.sulion.webapplications.api.RegisteredURLResponse;
-import ru.sulion.webapplications.api.SignUpRequest;
-import ru.sulion.webapplications.api.SignUpResponse;
+import ru.sulion.webapplications.api.*;
 
 import java.util.List;
 
@@ -13,7 +10,9 @@ import java.util.List;
 public interface AccountService {
     List<Redirect> getRecordsFor(String accountId);
 
-    RegisteredURLResponse registerRecordFor(String name);
+    RegisteredURLResponse registerRecordFor(String name, RegisterURLRequest request);
 
     SignUpResponse register(SignUpRequest request);
+
+    boolean checkAccount(String username, String password);
 }

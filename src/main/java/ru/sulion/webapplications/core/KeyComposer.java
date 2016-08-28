@@ -28,10 +28,12 @@ public class KeyComposer {
     @Inject
     public KeyComposer(DB db) {
         this.db = db;
-        Atomic.Long start = this.db.atomicLong(HASH_SEQ).createOrOpen();
-        start.compareAndSet(0, System.currentTimeMillis()%1000000000L/100L*62*62);
-        //Theoretically, we could've started from the number
-        // one, but that would have given us dull and boring urls
+        if(this.db != null ) {
+            Atomic.Long start = this.db.atomicLong(HASH_SEQ).createOrOpen();
+            start.compareAndSet(0, System.currentTimeMillis() % 1000000000L / 100L * 62 * 62);
+            //Theoretically, we could've started from the number
+            // one, but that would have given us dull and boring urls
+        }
     }
 
     private static String collectCharRange(char start, char end) {
@@ -47,7 +49,7 @@ public class KeyComposer {
     }
 
 
-    protected String toBase62(long current) {
+    public String toBase62(long current) {
         long tmp = current;
         StringBuilder builder = new StringBuilder();
 

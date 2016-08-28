@@ -41,7 +41,7 @@ public class ConfigurationResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public RegisteredURLResponse register(RegisterURLRequest request,
                                           @Context SecurityContext securityContext) {
-        return accountService.registerRecordFor(securityContext.getUserPrincipal().getName());
+        return accountService.registerRecordFor(securityContext.getUserPrincipal().getName(), request);
     }
 
     @PermitAll

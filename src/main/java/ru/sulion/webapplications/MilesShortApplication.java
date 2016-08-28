@@ -38,7 +38,7 @@ public class MilesShortApplication extends Application<MilesShortConfiguration> 
         Injector injector = Guice.createInjector(new MilesShortModule());
         environment.jersey().register(new AuthDynamicFeature(
                 new BasicCredentialAuthFilter.Builder<User>()
-                        .setAuthenticator(new MilesShortConfigurationAutheticator())
+                        .setAuthenticator(injector.getInstance(MilesShortConfigurationAutheticator.class))
                         .setAuthorizer(new MilesShortConfigAuthorizer())
                         .setRealm("URL MANAGEMENT")
                         .buildAuthFilter()));
