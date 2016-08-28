@@ -26,7 +26,7 @@ public class MockStatisticStore implements StatisticsStore{
     }
 
     @Override
-    public Map<String, Long> requestStatistics(List<String> request) {
+    public Map<String, Long> requestStatistics(List<Redirect> request) {
         return null;
     }
 }

@@ -3,6 +3,7 @@ package ru.sulion.webapplications.core;
 import com.google.inject.Inject;
 import org.mapdb.Atomic;
 import org.mapdb.DB;
+import ru.sulion.webapplications.api.Redirect;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -70,10 +71,9 @@ public class KeyComposer {
         return sum;
     }
 
-    public String toStatsKey(String shortUrl, String fullUrl) {
-        return shortUrl + fullUrl;
+    public String toStatsKey(Redirect redirect) {
+        return redirect.getShortUrl() + redirect.getLocation().toString();
     }
-
     public String removePrefix(String statsKey) {
         return statsKey.substring(SHORT_URL_SIZE);
     }

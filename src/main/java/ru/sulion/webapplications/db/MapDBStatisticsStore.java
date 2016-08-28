@@ -31,7 +31,7 @@ public class MapDBStatisticsStore implements StatisticsStore {
     @Override
     public boolean registerRequest(Redirect redirect) {
         try {
-            String key = keyComposer.toStatsKey(redirect.getShortUrl(), redirect.getLocation().toString());
+            String key = keyComposer.toStatsKey(redirect);
             final Map<String, Long> statistics = openMap();
             //DBMap protects each record with a reentrant RW-lock, so it's safe just to update the value
             statistics.put(key, statistics.getOrDefault(key, 0L)+1L);
@@ -42,8 +42,8 @@ public class MapDBStatisticsStore implements StatisticsStore {
     }
 
     @Override
-    public Map<String, Long> requestStatistics(List<String> request) {
+    public Map<String, Long> requestStatistics(List<Redirect> request) {
         final Map<String, Long> statistics = openMap();
-        return request.stream().collect(Collectors.toMap(keyComposer::removePrefix, statistics::get));
+        return request.stream().map(keyComposer::toStatsKey).collect(Collectors.toMap(keyComposer::removePrefix, statistics::get));
     }
 }

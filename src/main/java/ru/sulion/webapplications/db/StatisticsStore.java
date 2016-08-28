@@ -9,5 +9,5 @@ public interface StatisticsStore {
     String STATISTICS_DICT = "STATS";
     boolean registerRequest(Redirect shortUrl);
 
-    Map<String, Long> requestStatistics(List<String> request);
+    Map<String, Long> requestStatistics(List<Redirect> recordsFor);
 }
