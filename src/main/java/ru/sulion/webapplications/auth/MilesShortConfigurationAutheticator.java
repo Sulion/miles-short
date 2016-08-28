@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import io.dropwizard.auth.basic.BasicCredentials;
-import ru.sulion.webapplications.core.AccountService;
+import ru.sulion.webapplications.api.AccountService;
 import ru.sulion.webapplications.core.User;
 
 import java.util.Optional;

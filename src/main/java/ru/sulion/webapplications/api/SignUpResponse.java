@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by sulion on 25.08.16.
  */
 public class SignUpResponse {
+    //TODO: default password to an empty string in case of unsuccessful registration
     private final boolean success;
     private final String description;
     private final String password;

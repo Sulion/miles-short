@@ -26,6 +26,7 @@ public class MapDBAccountServiceTest {
     private static final String TEST_DB = "account.db";
     public static final String ACCOUNT_NAME = "Seryy";
     public static final String SECOND_ACCOUNT_NAME = "Pakhan";
+    public static final String YOUTUBE_COM = "https://youtube.com";
     private DB db;
 
     @Before
@@ -62,7 +63,7 @@ public class MapDBAccountServiceTest {
     @Test
     public void registerRecordFor() throws Exception {
         MapDBAccountService accountService = new MapDBAccountService(db, new KeyComposer(db), "http://sho.rt");
-        RegisterURLRequest registerURLRequest = new RegisterURLRequest("https://youtube.com", Response.Status.FOUND);
+        RegisterURLRequest registerURLRequest = new RegisterURLRequest(YOUTUBE_COM, Response.Status.FOUND);
         RegisteredURLResponse response = accountService.registerRecordFor(ACCOUNT_NAME, registerURLRequest);
         assertNotNull(response);
         assertNotNull(response.getShortUrl());
@@ -70,7 +71,11 @@ public class MapDBAccountServiceTest {
         Map<String, Redirect> seryyAccount = db.treeMap(MapDBAccountService.RECORDS_DB_PREFIX
                 +ACCOUNT_NAME).keySerializer(Serializer.STRING)
                 .valueSerializer(Serializer.JAVA).createOrOpen();
+        Map<String, Redirect> globalMap = db.treeMap(RedirectDictionary.DICT_NAME).keySerializer(Serializer.STRING)
+                .valueSerializer(Serializer.JAVA).createOrOpen();
         assertEquals(4, seryyAccount.size());
+        String key = response.getShortUrl();
+        assertEquals(YOUTUBE_COM, globalMap.get(key.substring(key.length() - 6)).getLocation().toString());
     }
 
     @Test

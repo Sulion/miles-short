@@ -12,17 +12,22 @@ import java.util.Map;
  * Created by sulion on 27.08.16.
  */
 public class MapDBRedirectDictionary implements RedirectDictionary {
-    Map<String, Redirect> storage;
+    private final DB db;
     public static final Redirect DEFAULT_VALUE = new Redirect(Response.Status.NOT_FOUND, null, null);
 
 
     @Inject
-    public MapDBRedirectDictionary(@ReadOnly DB db) {
-        storage = (Map<String, Redirect>) db.treeMap(DICT_NAME).keySerializer(Serializer.STRING).open();
+    public MapDBRedirectDictionary(DB db) {
+        this.db = db;
+    }
+
+    private Map<String, Redirect> openMap() {
+        return  (Map<String, Redirect>) db.treeMap(DICT_NAME).keySerializer(Serializer.STRING)
+                .valueSerializer(Serializer.JAVA).createOrOpen();
     }
 
     @Override
     public Redirect find(String shortUrl) {
-        return storage.getOrDefault(shortUrl, DEFAULT_VALUE);
+        return openMap().getOrDefault(shortUrl, DEFAULT_VALUE);
     }
 }

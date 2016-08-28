@@ -1,4 +1,4 @@
-package ru.sulion.webapplications.core;
+package ru.sulion.webapplications.api;
 
 import ru.sulion.webapplications.api.*;
 

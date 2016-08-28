@@ -1,18 +1,18 @@
 package ru.sulion.webapplications.db;
 
+import com.google.inject.Inject;
 import org.mapdb.DB;
 import org.mapdb.Serializer;
 import ru.sulion.webapplications.api.Redirect;
+import ru.sulion.webapplications.api.StatisticsStore;
 import ru.sulion.webapplications.core.KeyComposer;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -33,6 +33,7 @@ public class MapDBStatisticsStore implements StatisticsStore {
      * so we need a long to store the value.
      */
 
+    @Inject
     public MapDBStatisticsStore(DB db, KeyComposer keyComposer) {
         this.db = db;
         this.keyComposer = keyComposer;

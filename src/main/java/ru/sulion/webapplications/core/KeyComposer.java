@@ -1,6 +1,7 @@
 package ru.sulion.webapplications.core;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.mapdb.Atomic;
 import org.mapdb.DB;
 import ru.sulion.webapplications.api.Redirect;
@@ -11,6 +12,7 @@ import java.util.stream.IntStream;
 /**
  * Created by sulion on 27.08.16.
  */
+@Singleton
 public class KeyComposer {
 
     public static final String HASH_SEQ = "HASH_SEQ";
@@ -18,11 +20,9 @@ public class KeyComposer {
     private final DB db;
 
     static {
-        StringBuilder builder = new StringBuilder(62);
-        builder.append(collectCharRange('0', '9'));
-        builder.append(collectCharRange('a', 'z'));
-        builder.append(collectCharRange('A', 'Z'));
-        ALPHABET = builder.toString();
+        ALPHABET = collectCharRange('0', '9') +
+                collectCharRange('a', 'z') +
+                collectCharRange('A', 'Z');
     }
 
     @Inject
