@@ -9,10 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
-import ru.sulion.webapplications.api.AccountService;
-import ru.sulion.webapplications.api.RegisteredURLResponse;
-import ru.sulion.webapplications.api.SignUpRequest;
-import ru.sulion.webapplications.api.SignUpResponse;
+import ru.sulion.webapplications.api.*;
 import ru.sulion.webapplications.auth.MilesShortConfigAuthorizer;
 import ru.sulion.webapplications.auth.MilesShortConfigurationAutheticator;
 import ru.sulion.webapplications.core.User;
@@ -23,7 +20,11 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -37,6 +38,7 @@ public class ConfigurationResourceTest {
     private static final AccountService ACCOUNT_SERVICE = mock(AccountService.class);
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
+    private static final StatisticsStore statisticsStore = mock(StatisticsStore.class);
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
             .addProvider(new AuthDynamicFeature(
@@ -45,7 +47,7 @@ public class ConfigurationResourceTest {
                             .setAuthorizer(new MilesShortConfigAuthorizer())
                             .setRealm("URL MANAGEMENT")
                             .buildAuthFilter()))
-            .addResource(new ConfigurationResource(new MockStatisticStore(),ACCOUNT_SERVICE))
+            .addResource(new ConfigurationResource(statisticsStore, ACCOUNT_SERVICE))
             .build();
     String ACCOUNT_SETUP = "{ \"AccountId\": \"blah\" }";
     String INVALID_ACCOUNT_SETUP = "{ }";
@@ -118,7 +120,7 @@ public class ConfigurationResourceTest {
     public void register_PositiveCase() throws Exception {
         when(ACCOUNT_SERVICE.registerRecordFor(anyString(), anyObject()))
                 .thenReturn(new RegisteredURLResponse("http://sho.rt/gXGL01"));
-        when(ACCOUNT_SERVICE.checkAccount(anyString(),anyString())).thenReturn(Boolean.TRUE);
+        when(ACCOUNT_SERVICE.checkAccount(anyString(), anyString())).thenReturn(Boolean.TRUE);
         Response response = resources.client().target("/register").request()
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .header(HttpHeaders.AUTHORIZATION, "Basic Z29vZC1ndXk6c2VjcmV0")
@@ -134,7 +136,7 @@ public class ConfigurationResourceTest {
     public void register_PositiveCase_Omitted_RedirectType() throws Exception {
         when(ACCOUNT_SERVICE.registerRecordFor(anyString(), anyObject()))
                 .thenReturn(new RegisteredURLResponse("http://sho.rt/gXGL01"));
-        when(ACCOUNT_SERVICE.checkAccount(anyString(),anyString())).thenReturn(Boolean.TRUE);
+        when(ACCOUNT_SERVICE.checkAccount(anyString(), anyString())).thenReturn(Boolean.TRUE);
         Response response = resources.client().target("/register").request()
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .header(HttpHeaders.AUTHORIZATION, "Basic Z29vZC1ndXk6c2VjcmV0")
@@ -150,7 +152,7 @@ public class ConfigurationResourceTest {
     public void register_InvalidRequest() throws Exception {
         when(ACCOUNT_SERVICE.registerRecordFor(anyString(), anyObject()))
                 .thenReturn(new RegisteredURLResponse("http://sho.rt/gXGL01"));
-        when(ACCOUNT_SERVICE.checkAccount(anyString(),anyString())).thenReturn(Boolean.TRUE);
+        when(ACCOUNT_SERVICE.checkAccount(anyString(), anyString())).thenReturn(Boolean.TRUE);
         Response response = resources.client().target("/register").request()
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .header(HttpHeaders.AUTHORIZATION, "Basic Z29vZC1ndXk6c2VjcmV0")
@@ -160,8 +162,55 @@ public class ConfigurationResourceTest {
     }
 
     @Test
-    public void retrieveStatistics() throws Exception {
+    public void retrieveStatistics_StandardPositiveCase() throws Exception {
+        when(ACCOUNT_SERVICE.checkAccount(anyString(), anyString())).thenReturn(Boolean.TRUE);
+        when(ACCOUNT_SERVICE.getRecordsFor("good-guy")).thenReturn(new ArrayList<>());
+        when(statisticsStore.requestStatistics(anyList())).thenReturn(new HashMap<String, Long>() {{
+            put("https://github.com/Sulion/miles-short", 182981249232L);
+            put("https://google.com", 282L);
+            put("https://yandex.ru", 2387239392L);
+        }});
+        Response response = resources.client().target("/statistic/good-guy").request()
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, "Basic Z29vZC1ndXk6c2VjcmV0")
+                .get();
+        assertNotNull(response);
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+        assertTrue(response.hasEntity());
+        HashMap entity = response.readEntity(HashMap.class);
+        assertEquals(3, entity.size());
 
+    }
+
+    @Test
+    public void retrieveStatistics_EmptyMap() throws Exception {
+        when(ACCOUNT_SERVICE.checkAccount(anyString(), anyString())).thenReturn(Boolean.TRUE);
+        when(ACCOUNT_SERVICE.getRecordsFor("good-guy")).thenReturn(new ArrayList<>());
+        when(statisticsStore.requestStatistics(anyList())).thenReturn(new HashMap<String, Long>() {{
+        }});
+        Response response = resources.client().target("/statistic/good-guy").request()
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, "Basic Z29vZC1ndXk6c2VjcmV0")
+                .get();
+        assertNotNull(response);
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+        assertTrue(response.hasEntity());
+        HashMap entity = response.readEntity(HashMap.class);
+        assertEquals(0, entity.size());
+    }
+
+    @Test
+    public void retrieveStatistics_SecurityViolation() throws Exception {
+        when(ACCOUNT_SERVICE.checkAccount(anyString(), anyString())).thenReturn(Boolean.TRUE);
+        when(ACCOUNT_SERVICE.getRecordsFor("good-guy")).thenReturn(new ArrayList<>());
+        when(statisticsStore.requestStatistics(anyList())).thenReturn(new HashMap<String, Long>() {{
+        }});
+        Response response = resources.client().target("/statistic/another-guy").request()
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, "Basic Z29vZC1ndXk6c2VjcmV0")
+                .get();
+        assertNotNull(response);
+        assertEquals(Response.Status.FORBIDDEN.getStatusCode(), response.getStatus());
     }
 
 }

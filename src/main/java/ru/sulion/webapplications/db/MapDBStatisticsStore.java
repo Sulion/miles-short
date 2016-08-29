@@ -9,6 +9,7 @@ import ru.sulion.webapplications.core.KeyComposer;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.concurrent.locks.Lock;
@@ -78,6 +79,7 @@ public class MapDBStatisticsStore implements StatisticsStore {
     public Map<String, Long> requestStatistics(List<Redirect> request) {
         underLock(this::dumpStatisticCache, cacheLock.writeLock());
         final Map<String, Long> statistics = openMap();
-        return request.stream().map(keyComposer::toStatsKey).collect(Collectors.toMap(keyComposer::removePrefix, statistics::get));
+        return request.stream().map(keyComposer::toStatsKey).collect(
+                Collectors.toMap(keyComposer::removePrefix, k -> Optional.ofNullable(statistics.get(k)).orElse(0L)));
     }
 }

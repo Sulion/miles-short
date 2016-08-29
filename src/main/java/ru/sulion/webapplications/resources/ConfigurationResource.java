@@ -1,6 +1,7 @@
 package ru.sulion.webapplications.resources;
 
 import com.google.inject.Inject;
+import org.hibernate.validator.constraints.NotEmpty;
 import ru.sulion.webapplications.api.RegisterURLRequest;
 import ru.sulion.webapplications.api.RegisteredURLResponse;
 import ru.sulion.webapplications.api.SignUpRequest;
@@ -54,7 +55,7 @@ public class ConfigurationResource {
 
     @PermitAll
     @GET
-    @Path("statistic/{accountId}")
+    @Path("statistic/{accountId: .{1,200}}")
     public Map<String, Long> retrieveStatistics(@PathParam("accountId") String accountId,
                                                    @Context SecurityContext securityContext) {
         if(securityContext.getUserPrincipal().getName().equals(accountId)) {
