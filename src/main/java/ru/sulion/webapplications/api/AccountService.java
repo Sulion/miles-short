@@ -1,7 +1,5 @@
 package ru.sulion.webapplications.api;
 
-import ru.sulion.webapplications.api.*;
-
 import java.util.List;
 
 /**

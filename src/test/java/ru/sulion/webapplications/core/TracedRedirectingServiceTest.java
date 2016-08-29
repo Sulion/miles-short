@@ -3,10 +3,10 @@ package ru.sulion.webapplications.core;
 import org.junit.After;
 import org.junit.Test;
 import ru.sulion.webapplications.api.Redirect;
+import ru.sulion.webapplications.api.StatisticsStore;
 import ru.sulion.webapplications.db.MockStatisticStore;
 import ru.sulion.webapplications.db.MockURLDictionary;
 import ru.sulion.webapplications.db.RedirectDictionary;
-import ru.sulion.webapplications.api.StatisticsStore;
 
 import javax.ws.rs.core.Response;
 import java.net.URI;

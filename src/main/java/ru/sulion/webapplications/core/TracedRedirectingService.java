@@ -3,8 +3,8 @@ package ru.sulion.webapplications.core;
 import com.google.inject.Inject;
 import ru.sulion.webapplications.api.Redirect;
 import ru.sulion.webapplications.api.RedirectingService;
-import ru.sulion.webapplications.db.RedirectDictionary;
 import ru.sulion.webapplications.api.StatisticsStore;
+import ru.sulion.webapplications.db.RedirectDictionary;
 
 import javax.ws.rs.core.Response;
 

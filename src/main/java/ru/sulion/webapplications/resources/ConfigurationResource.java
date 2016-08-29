@@ -1,13 +1,7 @@
 package ru.sulion.webapplications.resources;
 
 import com.google.inject.Inject;
-import org.hibernate.validator.constraints.NotEmpty;
-import ru.sulion.webapplications.api.RegisterURLRequest;
-import ru.sulion.webapplications.api.RegisteredURLResponse;
-import ru.sulion.webapplications.api.SignUpRequest;
-import ru.sulion.webapplications.api.SignUpResponse;
-import ru.sulion.webapplications.api.AccountService;
-import ru.sulion.webapplications.api.StatisticsStore;
+import ru.sulion.webapplications.api.*;
 
 import javax.annotation.security.PermitAll;
 import javax.validation.Valid;

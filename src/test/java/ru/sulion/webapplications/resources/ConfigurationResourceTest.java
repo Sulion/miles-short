@@ -9,24 +9,23 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
-import ru.sulion.webapplications.api.*;
+import ru.sulion.webapplications.api.AccountService;
+import ru.sulion.webapplications.api.RegisteredURLResponse;
+import ru.sulion.webapplications.api.SignUpResponse;
+import ru.sulion.webapplications.api.StatisticsStore;
 import ru.sulion.webapplications.auth.MilesShortConfigAuthorizer;
 import ru.sulion.webapplications.auth.MilesShortConfigurationAutheticator;
 import ru.sulion.webapplications.core.User;
-import ru.sulion.webapplications.db.MockStatisticStore;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

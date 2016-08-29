@@ -5,7 +5,6 @@ import com.google.inject.name.Named;
 import org.mapdb.DB;
 import org.mapdb.Serializer;
 import ru.sulion.webapplications.api.*;
-import ru.sulion.webapplications.api.AccountService;
 import ru.sulion.webapplications.core.KeyComposer;
 
 import javax.ws.rs.core.Response;

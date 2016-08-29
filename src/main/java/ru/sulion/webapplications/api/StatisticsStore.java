@@ -1,7 +1,5 @@
 package ru.sulion.webapplications.api;
 
-import ru.sulion.webapplications.api.Redirect;
-
 import java.util.List;
 import java.util.Map;
 

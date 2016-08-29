@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
-import org.mapdb.Serializer;
 import ru.sulion.webapplications.api.Redirect;
 import ru.sulion.webapplications.core.KeyComposer;
 
@@ -16,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.LongAdder;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
