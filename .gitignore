@@ -5,6 +5,7 @@
 .idea
 target
 dependency-reduced-pom.xml
+runtime
 # Package Files #
 *.jar
 *.war
