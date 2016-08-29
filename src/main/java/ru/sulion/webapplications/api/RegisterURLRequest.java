@@ -1,27 +1,25 @@
 package ru.sulion.webapplications.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.ws.rs.core.Response;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * Created by sulion on 25.08.16.
  */
 public class RegisterURLRequest {
-    //TODO: url is mandatory
-    //TODO: keep redirectType as int
+    @NotEmpty
     private String url;
-    private Response.Status redirectType;
+    private int redirectType;
 
     public RegisterURLRequest() {
     }
 
-    public RegisterURLRequest(String url, Response.Status redirectType) {
+    public RegisterURLRequest(String url, int redirectType) {
         this.url = url;
         this.redirectType = redirectType;
     }
 
-    @JsonProperty
+    @JsonProperty()
     public String getUrl() {
         return url;
     }
@@ -31,11 +29,11 @@ public class RegisterURLRequest {
     }
 
     @JsonProperty
-    public Response.Status getRedirectType() {
+    public int getRedirectType() {
         return redirectType;
     }
 
-    public void setRedirectType(Response.Status redirectType) {
+    public void setRedirectType(int redirectType) {
         this.redirectType = redirectType;
     }
 }

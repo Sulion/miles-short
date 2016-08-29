@@ -9,9 +9,11 @@ import ru.sulion.webapplications.api.AccountService;
 import ru.sulion.webapplications.api.StatisticsStore;
 
 import javax.annotation.security.PermitAll;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.util.Map;
 
@@ -31,16 +33,18 @@ public class ConfigurationResource {
     @POST
     @Path("account")
     @Consumes(MediaType.APPLICATION_JSON)
-    public SignUpResponse signUp(SignUpRequest request){
-        //TODO: Add reject code when the account already exists
-        return accountService.register(request);
+    public Response signUp(@Valid SignUpRequest request){
+        SignUpResponse response = accountService.register(request);
+        if(!response.isSuccess())
+            return Response.status(Response.Status.FORBIDDEN).entity(response).build();
+        return Response.ok(response).build();
     }
 
     @PermitAll
     @POST
     @Path("register")
     @Consumes(MediaType.APPLICATION_JSON)
-    public RegisteredURLResponse register(RegisterURLRequest request,
+    public RegisteredURLResponse register(@Valid RegisterURLRequest request,
                                           @Context SecurityContext securityContext) {
         return accountService.registerRecordFor(securityContext.getUserPrincipal().getName(), request);
     }

@@ -63,7 +63,8 @@ public class MapDBAccountServiceTest {
     @Test
     public void registerRecordFor() throws Exception {
         MapDBAccountService accountService = new MapDBAccountService(db, new KeyComposer(db), "http://sho.rt");
-        RegisterURLRequest registerURLRequest = new RegisterURLRequest(YOUTUBE_COM, Response.Status.FOUND);
+        RegisterURLRequest registerURLRequest = new RegisterURLRequest(YOUTUBE_COM,
+                Response.Status.FOUND.getStatusCode());
         RegisteredURLResponse response = accountService.registerRecordFor(ACCOUNT_NAME, registerURLRequest);
         assertNotNull(response);
         assertNotNull(response.getShortUrl());

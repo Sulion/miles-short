@@ -69,7 +69,10 @@ public class MapDBAccountService implements AccountService {
     public RegisteredURLResponse registerRecordFor(String accountId, RegisterURLRequest request) {
         Map<String, Redirect> map = openAccountRecordsMap(accountId);
         String key = keyComposer.toShortURL(request.getUrl());
-        Redirect redirect = new Redirect(Optional.ofNullable(request.getRedirectType()).orElse(Response.Status.FOUND),
+        Redirect redirect = new Redirect(
+                Optional.ofNullable(
+                        Response.Status.fromStatusCode(request.getRedirectType()))
+                        .orElse(Response.Status.FOUND),
                 request.getUrl(), key);
         map.put(key, redirect);
         openGlobalRecordsMap().put(key, redirect);
