@@ -1,0 +1,18 @@
+{
+  "server": {
+    "type": "simple",
+    "applicationContextPath": "/app",
+    "adminContextPath": "/admin",
+    "connector": {
+      "type": "http",
+      "port": $PORT
+    }
+  }, "httpUrl": "https://miles-short.herokuapp.com:8080",
+     "dbFileName": "./runtime/miles.short.db",
+  "logging": {
+     "level": "INFO",
+     "loggers": {
+        "ru.sulion.web-applications": "DEBUG"
+     }
+  }
+}

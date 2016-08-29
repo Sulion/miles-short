@@ -1,13 +1,13 @@
+#server:
+#  applicationConnectors:
+#  - type: http
+#    port: $PORT
+#  adminConnectors:
+#  - type: http
+#    port: 8091
 logging:
   level: INFO
   loggers:
     ru.sulion.web-applications: DEBUG
 httpUrl: https://miles-short.herokuapp.com:8080
 dbFileName: ./runtime/miles.short.db
-server:
-  applicationConnectors:
-  - type: http 
-    port: ${PORT}
-  adminConnectors:
-  - type: http
-    port: 9001
