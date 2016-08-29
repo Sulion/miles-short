@@ -1,7 +1,7 @@
 {
   "server": {
     "type": "simple",
-    "applicationContextPath": "/app",
+    "applicationContextPath": "/",
     "adminContextPath": "/admin",
     "connector": {
       "type": "http",
