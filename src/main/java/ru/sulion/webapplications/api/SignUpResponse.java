@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SignUpResponse {
-    //TODO: default password to an empty string in case of unsuccessful registration
     private final boolean success;
     private final String description;
     private final String password;
