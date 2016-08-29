@@ -125,7 +125,38 @@ public class ConfigurationResourceTest {
                 .buildPost(Entity.json(URL_RECORD_SETUP_FULL)).invoke();
         assertNotNull(response);
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
-        System.out.println(MAPPER.writeValueAsString(response));
+        assertTrue(response.hasEntity());
+        RegisteredURLResponse entity = response.readEntity(RegisteredURLResponse.class);
+        assertEquals("http://sho.rt/gXGL01", entity.getShortUrl());
+    }
+
+    @Test
+    public void register_PositiveCase_Omitted_RedirectType() throws Exception {
+        when(ACCOUNT_SERVICE.registerRecordFor(anyString(), anyObject()))
+                .thenReturn(new RegisteredURLResponse("http://sho.rt/gXGL01"));
+        when(ACCOUNT_SERVICE.checkAccount(anyString(),anyString())).thenReturn(Boolean.TRUE);
+        Response response = resources.client().target("/register").request()
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, "Basic Z29vZC1ndXk6c2VjcmV0")
+                .buildPost(Entity.json(URL_RECORD_SETUP_DFLT)).invoke();
+        assertNotNull(response);
+        assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
+        assertTrue(response.hasEntity());
+        RegisteredURLResponse entity = response.readEntity(RegisteredURLResponse.class);
+        assertEquals("http://sho.rt/gXGL01", entity.getShortUrl());
+    }
+
+    @Test
+    public void register_InvalidRequest() throws Exception {
+        when(ACCOUNT_SERVICE.registerRecordFor(anyString(), anyObject()))
+                .thenReturn(new RegisteredURLResponse("http://sho.rt/gXGL01"));
+        when(ACCOUNT_SERVICE.checkAccount(anyString(),anyString())).thenReturn(Boolean.TRUE);
+        Response response = resources.client().target("/register").request()
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, "Basic Z29vZC1ndXk6c2VjcmV0")
+                .buildPost(Entity.json(INVALID_ACCOUNT_SETUP)).invoke();
+        assertNotNull(response);
+        assertEquals(422/*Unprocessable Entity*/, response.getStatus());
     }
 
     @Test

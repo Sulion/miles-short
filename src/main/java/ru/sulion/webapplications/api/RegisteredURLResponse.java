@@ -8,6 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class RegisteredURLResponse {
     private final String shortUrl;
 
+    public RegisteredURLResponse() {
+        shortUrl = null;
+    }
+
     public RegisteredURLResponse(String shortUrl) {
         this.shortUrl = shortUrl;
     }

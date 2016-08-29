@@ -15,6 +15,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.net.URI;
 import java.util.Map;
 
 
@@ -44,9 +45,11 @@ public class ConfigurationResource {
     @POST
     @Path("register")
     @Consumes(MediaType.APPLICATION_JSON)
-    public RegisteredURLResponse register(@Valid RegisterURLRequest request,
-                                          @Context SecurityContext securityContext) {
-        return accountService.registerRecordFor(securityContext.getUserPrincipal().getName(), request);
+    public Response register(@Valid RegisterURLRequest request,
+                             @Context SecurityContext securityContext) {
+        RegisteredURLResponse response =  accountService.registerRecordFor(
+                securityContext.getUserPrincipal().getName(), request);
+        return Response.created(URI.create(response.getShortUrl())).entity(response).build();
     }
 
     @PermitAll
