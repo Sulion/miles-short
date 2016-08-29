@@ -1,10 +1,11 @@
 sudo: false
 language: java
-jdk:
-  oraclejdk8
-#after_success:
-#  - bash .travis_after_success.sh
+jdk: oraclejdk8
 script: mvn clean verify
 cache:
   directories:
-    - $HOME/.m2
+  - "$HOME/.m2"
+deploy:
+  provider: heroku
+  api_key:
+    secure: BhKU8PVG9CKvcyoU73Jb3Z21AwAae7+QQWPpyKfPcOCCncqBt7Aoi3CX8oDzrExFwA8gHLSYqNmhyPxZmRr+O2TW/xfo725WepC14NSHp6OP/v0kxOm5BcguN4fKIc40SxbH15pkOKKbiSBcIT+LMxyYhoDxQ5Ng+gjNHD+W7yu0xCMI/A0U2GTsi1BZQV+zATFOF+12esTjR7YB1hn4FtBOdWUj2kDFUsqHiS78P7B6BFsSTyjyF77cPnsLtPfv7sSJOiqo75bwjPRIR2jgrblTcF+4nNbWrGJOcfuRGrxr1CYQWZw+XoNkvecy3d5iluzBGBb/Fe/CEbVreMzUSyJ/F9cvp/TyFSs4kh/BRw2UZUWB66weFzFwmyAPoS+WcyA8SZ8d3Ohjp85Zn9pBKQnGFQ851s0S8qsIQE2VfkqDMP0yjxcxWBscC0TE1vULEzyLvMxN6b4vlcJ2xvevhzh4aUazsriSByYV+G8g8b9j9KBzjdah2BbiA+ph/OY+92B2cEQs/1fvWNe/AgxkHcAYvQvzrdjnnPSrZvjx8DAUPMR/+I4AoIQ6V8G268IOdgHTO56YR2l1f0ASH583RwgXlQsqih2+lJUAChd1GrcMuqEAfGAdI5kxmFxa6Xoerdh411rXZ4c3yWxJ7Omv7q6BHWAB2ePLQgxqHXc7BIo=
