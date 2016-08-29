@@ -2,5 +2,5 @@ logging:
   level: INFO
   loggers:
     ru.sulion.web-applications: DEBUG
-httpUrl: http://localhost:8080
+httpUrl: https://miles-short.herokuapp.com:8080
 dbFileName: ./runtime/miles.short.db
