@@ -53,18 +53,16 @@ You may also customize ports, persistent DB location and returned in `/register`
 <tr><td>URI</td><td> /account</td></tr>
 <tr><td>Request type</td><td> application/json</td></tr>
 <tr><td>Request Body</td><td> JSON object with the following parameters:
- AccountId (String, mandatory)
-Example: { AccountId : 'myAccountId'}</td></tr>
+AccountId (String, mandatory)
+Example: { "AccountId" : "myAccountId"}</td></tr>
+<tr><td>Reponse Type</td><td> application/json</td></tr>
+<tr><td>Response</td><td> We distinguish the successful from the unsuccessful registration.
+Unsuccessful registration occurs only if the concerned account ID already exists. The parameters are as follows:
+
+* success: true / false
+*  description: Description of status, for example: account with that ID already exists
+*  password: Returns only if the account was successfully created.
+
+Automatically generated password length of 8 alphanumeric characters. Example {success: 'true', description: 'Your account is opened',
+password: 'xC345Fc0'}</td></tr>
 </table>
-|Reponse Type| application/json|
-|Response| We distinguish the successful from the unsuccessful registration.
-Unsuccessful registration occurs only if the concerned account ID
-already exists. The parameters are as follows:
- success: true / false
- description: Description of status, for example: account with that
-ID already exists
- password: Returns only if the account was successfully created.
-Automatically generated password length of 8 alphanumeric
-characters
-Example {success: 'true', description: 'Your account is opened',
-password: 'xC345Fc0'}|
