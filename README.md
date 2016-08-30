@@ -45,3 +45,25 @@ You may also customize ports, persistent DB location and returned in `/register`
     dbFileName: ./otherLocation/otherdbname.db
 
 ## Usage
+
+
+### Opening of accounts
+
+|HTTP method| POST|
+|URI| /account|
+|Request type| application/json|
+|Request Body| JSON object with the following parameters:
+ AccountId (String, mandatory)
+Example: { AccountId : 'myAccountId'}|
+|Reponse Type| application/json|
+|Response| We distinguish the successful from the unsuccessful registration.
+Unsuccessful registration occurs only if the concerned account ID
+already exists. The parameters are as follows:
+ success: true / false
+ description: Description of status, for example: account with that
+ID already exists
+ password: Returns only if the account was successfully created.
+Automatically generated password length of 8 alphanumeric
+characters
+Example {success: 'true', description: 'Your account is opened',
+password: 'xC345Fc0'}|
