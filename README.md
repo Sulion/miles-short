@@ -104,3 +104,7 @@ Example:<br/>
 "http://myweb.com/someverylongurl3/thensomedirectory3/": 91,<br/>
 }</td></tr>
 </table>
+
+### Redirection itself
+
+This is fairly simple, just query the url which `/register` method has given you.
