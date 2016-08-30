@@ -2,9 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Miles short - method manual</title>
 </head>
 <body>
-Here goes help
+
+<h2>Usage</h2>
+
+<h3>Opening of accounts</h3>
+
+<table border="1px">
+<tbody><tr><td>HTTP method</td><td>POST</td></tr>
+<tr><td>URI</td><td> /account</td></tr>
+<tr><td>Request type</td><td> application/json</td></tr>
+<tr><td>Request Body</td><td><p>JSON object with the following parameters:</p>
+<p>AccountId (String, mandatory, length is less than or equals 200 characters: no overflow in my house)</p>
+<p>Example: { "AccountId" : "myAccountId"}</p></td></tr>
+<tr><td>Reponse Type</td><td> application/json</td></tr>
+<tr><td>Response</td><td> We distinguish the successful from the unsuccessful registration.
+Unsuccessful registration occurs only if the concerned account ID already exists. The parameters are as follows:
+<ul>
+<li>success: true | false</li>
+<li>description: Description of status, for example: account with that ID already exists</li>
+<li>password: Returns only if the account was successfully created.</li>
+</ul>
+Automatically generated password length of 8 alphanumeric characters. Example {"success": "true", "description": "Your account is opened",
+"password": "xC345Fc0"}</td></tr>
+</tbody></table>
+
+<h3>Registration of URLs</h3>
+
+<table border="1px">
+<tbody><tr><td>HTTP metod</td><td> POST</td></tr>
+<tr><td>URI</td><td> /register</td></tr>
+<tr><td>Request type</td><td> application/json</td></tr>
+<tr><td>Request Headers</td><td> Authorization header with Basic authentication token</td></tr>
+<tr><td>Request Body</td><td>JSON object with the following parameters:
+<ul>
+<li> url (mandatory, url that needs shortening)</li>
+<li> redirectType : 301 | 302 (not mandatory, default 302)</li>
+</ul>
+ Example: {
+"url": "<a href="http://stackoverflow.com/questions/1567929/website-safe-dataaccess-architecture-question?rq=1">http://stackoverflow.com/questions/1567929/website-safe-dataaccess-architecture-question?rq=1</a>",
+"redirectType" : 301
+}</td></tr>
+<tr><td>Reponse Type</td><td> application/json</td></tr>
+<tr><td>Response</td><td>Response parameters in case of successful registration are as follows:
+<ul><li>shortUrl (shortened URL)</li></ul>
+Example: { "shortUrl": "<a href="http://short.com/xYswlE">http://short.com/xYswlE</a>" }</td></tr>
+</tbody></table>
+
+<h3>Retrieval of statistics</h3>
+
+<table border="1px">
+<tbody><tr><td>HTTP metod</td><td> GET</td></tr>
+<tr><td>URI</td><td> /statistic/{AccountId}<br> It's kinda obvious, but {AccountId} is constrained the same as the original value which
+is supposed to be given here: no more than 200 characters.</td></tr>
+<tr><td>Request Headers</td><td> Set Authorization header and authenticate user</td></tr>
+<tr><td>Reponse Type</td><td> application/json</td></tr>
+<tr><td>Response</td><td> The server responds with a JSON object, key:value map, where the key
+eis the registered URL, and the value is the number of this URL redirects. <br>
+Example:<br>
+{<br>
+"<a href="http://myweb.com/someverylongurl/thensomedirectory/">http://myweb.com/someverylongurl/thensomedirectory/</a>": 10,<br>
+"<a href="http://myweb.com/someverylongurl2/thensomedirectory2/">http://myweb.com/someverylongurl2/thensomedirectory2/</a>": 4,<br>
+"<a href="http://myweb.com/someverylongurl3/thensomedirectory3/">http://myweb.com/someverylongurl3/thensomedirectory3/</a>": 91,<br>
+}</td></tr>
+</tbody></table>
+
+<h3>Redirection itself</h3>
+
+<p>This is fairly simple, just query the url which <code>/register</code> method has given you.</p>
 </body>
 </html>
