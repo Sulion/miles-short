@@ -48,13 +48,14 @@ You may also customize ports, persistent DB location and returned in `/register`
 
 
 ### Opening of accounts
-|----------|------|
-|HTTP method| POST|
-|URI| /account|
-|Request type| application/json|
-|Request Body| JSON object with the following parameters:
+<table>
+<tr><td>HTTP method</td><td>POST</td></tr>
+<tr><td>URI</td><td> /account</td></tr>
+<tr><td>Request type</td><td> application/json</td></tr>
+<tr><td>Request Body</td><td> JSON object with the following parameters:
  AccountId (String, mandatory)
-Example: { AccountId : 'myAccountId'}|
+Example: { AccountId : 'myAccountId'}</td></tr>
+</table>
 |Reponse Type| application/json|
 |Response| We distinguish the successful from the unsuccessful registration.
 Unsuccessful registration occurs only if the concerned account ID
