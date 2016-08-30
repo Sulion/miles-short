@@ -53,7 +53,7 @@ You may also customize ports, persistent DB location and returned in `/register`
 <tr><td>URI</td><td> /account</td></tr>
 <tr><td>Request type</td><td> application/json</td></tr>
 <tr><td>Request Body</td><td><p>JSON object with the following parameters:</p>
-<p>AccountId (String, mandatory)</p>
+<p>AccountId (String, mandatory, length is less than or equals 200 characters: no overflow in my house)</p>
 <p>Example: { "AccountId" : "myAccountId"}</p></td></tr>
 <tr><td>Reponse Type</td><td> application/json</td></tr>
 <tr><td>Response</td><td> We distinguish the successful from the unsuccessful registration.
@@ -79,11 +79,28 @@ Automatically generated password length of 8 alphanumeric characters. Example {"
 <li> redirectType : 301 | 302 (not mandatory, default 302)</li>
 </ul>
  Example: {
-url: 'http://stackoverflow.com/questions/1567929/website-safe-dataaccess-architecture-question?rq=1',
-redirectType : 301
+"url": "http://stackoverflow.com/questions/1567929/website-safe-dataaccess-architecture-question?rq=1",
+"redirectType" : 301
 }</td></tr>
 <tr><td>Reponse Type</td><td> application/json</td></tr>
 <tr><td>Response</td><td>Response parameters in case of successful registration are as follows:
 <ul><li>shortUrl (shortened URL)</li></ul>
-Example: { shortUrl: 'http://short.com/xYswlE'}</td></tr>
+Example: { "shortUrl": "http://short.com/xYswlE" }</td></tr>
+</table>
+
+###  Retrieval of statistics
+<table>
+<tr><td>HTTP metod</td><td> GET</td></tr>
+<tr><td>URI</td><td> /statistic/{AccountId}<br/> It's kinda obvious, but {AccountId} is constrained the same as the original value which
+is supposed to be given here: no more than 200 characters.</td></tr>
+<tr><td>Request Headers</td><td> Set Authorization header and authenticate user</td></tr>
+<tr><td>Reponse Type</td><td> application/json</td></tr>
+<tr><td>Response</td><td> The server responds with a JSON object, key:value map, where the key
+eis the registered URL, and the value is the number of this URL redirects. <br/>
+Example:<br/>
+{<br/>
+"http://myweb.com/someverylongurl/thensomedirectory/": 10,<br/>
+"http://myweb.com/someverylongurl2/thensomedirectory2/": 4,<br/>
+"http://myweb.com/someverylongurl3/thensomedirectory3/": 91,<br/>
+}</td></tr>
 </table>
