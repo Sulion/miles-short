@@ -52,11 +52,9 @@ You may also customize ports, persistent DB location and returned in `/register`
 <tr><td>HTTP method</td><td>POST</td></tr>
 <tr><td>URI</td><td> /account</td></tr>
 <tr><td>Request type</td><td> application/json</td></tr>
-<tr><td>Request Body</td><td> JSON object with the following parameters:
-
-AccountId (String, mandatory)
-
-Example: { "AccountId" : "myAccountId"}</td></tr>
+<tr><td>Request Body</td><td><p>JSON object with the following parameters:</p>
+<p>AccountId (String, mandatory)</p>
+<p>Example: { "AccountId" : "myAccountId"}</p></td></tr>
 <tr><td>Reponse Type</td><td> application/json</td></tr>
 <tr><td>Response</td><td> We distinguish the successful from the unsuccessful registration.
 Unsuccessful registration occurs only if the concerned account ID already exists. The parameters are as follows:
@@ -65,6 +63,27 @@ Unsuccessful registration occurs only if the concerned account ID already exists
 <li>description: Description of status, for example: account with that ID already exists</li>
 <li>password: Returns only if the account was successfully created.</li>
 </ul>
-Automatically generated password length of 8 alphanumeric characters. Example {success: 'true', description: 'Your account is opened',
-password: 'xC345Fc0'}</td></tr>
+Automatically generated password length of 8 alphanumeric characters. Example {"success": "true", "description": "Your account is opened",
+"password": "xC345Fc0"}</td></tr>
+</table>
+
+### Registration of URLs
+<table>
+<tr><td>HTTP metod</td><td> POST</td></tr>
+<tr><td>URI</td><td> /register</td></tr>
+<tr><td>Request type</td><td> application/json</td></tr>
+<tr><td>Request Headers</td><td> Authorization header with Basic authentication token</td></tr>
+<tr><td>Request Body</td><td>JSON object with the following parameters:
+<ul>
+<li> url (mandatory, url that needs shortening)</li>
+<li> redirectType : 301 | 302 (not mandatory, default 302)</li>
+</ul>
+ Example: {
+url: 'http://stackoverflow.com/questions/1567929/website-safe-dataaccess-architecture-question?rq=1',
+redirectType : 301
+}</td></tr>
+<tr><td>Reponse Type</td><td> application/json</td></tr>
+<tr><td>Response</td><td>Response parameters in case of successful registration are as follows:
+<ul><li>shortUrl (shortened URL)</li></ul>
+Example: { shortUrl: 'http://short.com/xYswlE'}</td></tr>
 </table>
