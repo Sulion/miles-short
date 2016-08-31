@@ -67,13 +67,13 @@ public class MapDBAccountService implements AccountService {
     @Override
     public RegisteredURLResponse registerRecordFor(String accountId, RegisterURLRequest request) {
         Map<String, Redirect> map = openAccountRecordsMap(accountId);
+
         String key = keyComposer.toShortURL(request.getUrl());
-        Redirect redirect = new Redirect(
+        Redirect redirect = map.computeIfAbsent(request.getUrl(), (g) -> new Redirect(
                 Optional.ofNullable(
                         Response.Status.fromStatusCode(request.getRedirectType()))
                         .orElse(Response.Status.FOUND),
-                request.getUrl(), key);
-        map.put(key, redirect);
+                request.getUrl(), key));
         openGlobalRecordsMap().put(key, redirect);
         db.commit();
         try {
