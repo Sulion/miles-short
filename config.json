@@ -7,7 +7,7 @@
       "type": "http",
       "port": $PORT
     }
-  }, "httpUrl": "https://miles-short.herokuapp.com:8080",
+  }, "httpUrl": "https://miles-short.herokuapp.com",
      "dbFileName": "./runtime/miles.short.db",
   "logging": {
      "level": "INFO",
