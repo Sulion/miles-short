@@ -13,15 +13,16 @@ but, as the URLs after the application's done with it, is quite short and perhap
 
 This application is a rather simple application of [Dropwizard](http://www.dropwizard.io/) Java Framework which produces
 just one jar. To install it from sources (and I currently don't provider binaries), you just have to clone the stable version from the
-repository (that being 0.2.0 currently) and build it with generic Maven:
+repository (that being 0.3.0 currently) and build it with generic Maven:
 
     git clone git@github.com:Sulion/miles-short.git
 	cd ./miles-short
+	git checkout tags/v0.3.0
 	mvn clean install
 	
-Maven build script will generate fat jar file named `miles-short-0.2.0.jar` which is almost all you need to start an application:
+Maven build script will generate fat jar file named `miles-short.jar` which is almost all you need to start an application:
 
-    mkdir -p ./runtime && java -jar target/miles-short-0.2.0.jar server config.yml
+    mkdir -p ./runtime && java -jar target/miles-short.jar server config.yml
 	
 The default port is `8080` for business URLs and `8081` for administrative ones (you may find metrics and healthcheck
 there). The directory `./runtime` is intended for persistens storage of application data, such as registered URLs and
